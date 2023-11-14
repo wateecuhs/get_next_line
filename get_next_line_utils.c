@@ -6,12 +6,11 @@
 /*   By: panger <panger@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/09 13:02:44 by panger            #+#    #+#             */
-/*   Updated: 2023/11/13 18:12:11 by panger           ###   ########.fr       */
+/*   Updated: 2023/11/14 12:50:33 by panger           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 int	ft_strlen(char *str)
 {
@@ -23,7 +22,7 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-int ft_strchr(const char *s, int c)
+int	ft_strchr(const char *s, int c)
 {
 	unsigned int	i;
 
@@ -41,4 +40,80 @@ int ft_strchr(const char *s, int c)
 	if (s[i] == (unsigned char)c)
 		return (i);
 	return (-1);
+}
+
+char	*ft_strdupset(char const *s, int start, int stop)
+{
+	char			*trg;
+	unsigned int	count;
+	int				i;
+
+	i = 0;
+	count = 0;
+	while (s[count])
+		count++;
+	trg = (char *)malloc((stop - start + 1) * sizeof(char));
+	if (!trg)
+		return (NULL);
+	while (s[start] && start < stop)
+	{
+		trg[i] = s[start];
+		i++;
+		start++;
+	}
+	trg[i] = '\0';
+	return (trg);
+}
+
+char	*ft_strdup(const char *s)
+{
+	int		srclen;
+	int		i;
+	char	*dest;
+
+	srclen = 0;
+	if (!s)
+		return (NULL);
+	while (s[srclen])
+		srclen++;
+	i = 0;
+	dest = (char *)malloc((srclen + 1) * sizeof(char));
+	if (!dest)
+		return (NULL);
+	while (i < srclen)
+	{
+		dest[i] = s[i];
+		i ++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_stradd(char *s1, char *s2, int size)
+{
+	int		i;
+	int		j;
+	char	*str;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (!s1)
+		return (ft_strdup(s2));
+	if (!s2)
+		return (ft_strdup(s1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + size + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j] && j < size)
+		str[i++] = s2[j++];
+	str[i] = '\0';
+	free(s1);
+	return (str);
 }
